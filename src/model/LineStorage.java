@@ -34,4 +34,9 @@ public class LineStorage {
     public void addLine(List<String> line, int index) {
         storedLines.add(index, line);
     }
+    
+    //Delete a line at a specified index
+    public void deleteLine(int index) {
+    	storedLines.remove(index);
+    }
 }
