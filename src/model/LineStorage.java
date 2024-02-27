@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 //Class acts as the database. It encapsulates the storage of the stored lines.
 //It is also able to add a line at a specified index
+//Written by John Willy
 public class LineStorage {
 
     //Stores the lines

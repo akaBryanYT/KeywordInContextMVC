@@ -5,6 +5,7 @@ import model.LineStorage;
 
 //Handles the controller logic.
 //The addLine method takes a line from the gui and adds it to the model
+//Written by John Willy
 public class ControlHandler {
 
     private Alphabetizer alpha;
