@@ -42,5 +42,11 @@ public class ControlHandler {
         //Send them to the view
         
     }
+    
+    
+    public void deleteLine(List<List<String>> lines) {
+    	
+    	//hashmap from line string to index
+    }
 
 }
