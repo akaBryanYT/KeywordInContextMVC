@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class LineStorage {
 
     //Stores the lines
-    private List<List<String>> storedLines;
+    private final List<List<String>> storedLines;
 
     //Initialize the data structure
     public LineStorage() {
