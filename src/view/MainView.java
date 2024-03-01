@@ -10,9 +10,13 @@ import java.awt.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.util.*;
 import java.util.List;
 
+/**
+ * @author Bryan Chavez
+ */
 public class MainView {
     private JPanel contentPane;
     private JTextArea kwicTextBox;
