@@ -54,7 +54,7 @@ public class ControlHandler {
 
     public void start(){
         // Create and show the GUI
-        SwingUtilities.invokeLater(() -> new MainView(this));
+        SwingUtilities.invokeLater(() -> this.mainView = new MainView(this));
         alpha = new Alphabetizer();
         circ = new CircularShifter();
         storage = new LineStorage();
