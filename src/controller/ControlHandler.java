@@ -8,6 +8,7 @@ import javax.swing.*;
 
 //Handles the controller logic.
 //The addLine method takes a line from the gui and adds it to the model
+//Written by John Willy
 public class ControlHandler {
 
     private Alphabetizer alpha;
@@ -22,10 +23,10 @@ public class ControlHandler {
     }
 
     //Adds the line and its circularly shifted variants to the proper spot in the model
-    public void addLine(List<String> line) {
+    public void addLines(List<List<String>> lines) {
 
         //First get the shifted lines based off of this line
-        List<List<String>> shiftedLines = circ.circShift(line);
+        List<List<String>> shiftedLines = circ.circShift(lines);
 
         //Get all of the stored lines from the model
         List<List<String>> allLines = storage.getAll();
@@ -37,6 +38,18 @@ public class ControlHandler {
         for(int i = 0; i < indexes.length; i++) {
             storage.addLine(shiftedLines.get(i), indexes[i]);
         }
+
+        //Get the lines again
+        allLines = storage.getAll();
+
+        //Send them to the view
+        mainView.setAllTitles(allLines);
+    }
+
+
+    public void deleteLines(List<List<String>> lines) {
+
+    	//hashmap from line string to index
     }
 
     public void start(){
@@ -45,12 +58,5 @@ public class ControlHandler {
         alpha = new Alphabetizer();
         circ = new CircularShifter();
         storage = new LineStorage();
-    }
-
-    public void addLines(List<List<String>> parsedLines) {
-    }
-
-    public void deleteLines(List<List<String>> linesToBeDeleted){
-
     }
 }
