@@ -263,6 +263,7 @@ public class MainView {
         return formattedText.toString();
     }
 
+    // add all titles to titles box.
     public void setAllTitles(List<List<String>> allTitles){
         String[] strings = new String[allTitles.size()];
         for(int i = 0; i<allTitles.size(); i++){
