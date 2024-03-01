@@ -17,7 +17,7 @@ public class MainView {
     private JPanel contentPane;
     private JTextArea kwicTextBox;
     private JTextArea userTextBox;
-    private JTextArea allTitlesBox;
+    private JList<String> allTitlesBox;
     private JButton submitTextButton;
     private JButton deleteTitlesButton;
     private JFrame mainFrame;
@@ -62,8 +62,7 @@ public class MainView {
             userTextBox.setFont(fontText);
             userTextBox.setBackground(textGrey);
 
-        allTitlesBox = new JTextArea();
-            allTitlesBox.setEditable(false); //set all titles text box non-editable
+        allTitlesBox = new JList<>();
             allTitlesBox.setFont(fontText);
             allTitlesBox.setBackground(textGrey);
 
@@ -73,28 +72,23 @@ public class MainView {
             submitTextButton.setFont(fontText);
 
             //add action listen to submit text button to send controller the new lines, and also clear text box
-            submitTextButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    //retrieve text from userTextBox
-                    String userInput = userTextBox.getText();
+            submitTextButton.addActionListener(e -> {
+                //retrieve text from userTextBox
+                String userInput = userTextBox.getText();
 
-                    //parse text into List<List<String>>
-                    List<List<String>> parsedLines = parseLines(userInput);
+                //parse text into List<List<String>>
+                List<List<String>> parsedLines = parseLines(userInput);
 
-                    //validate lines
-                    parsedLines = removeDuplicateLines(parsedLines);
+                //validate lines
+                parsedLines = removeDuplicateLines(parsedLines);
 
-                    //call controller to add new lines
-                    controller.addLines(parsedLines);
+                //call controller to add new lines
+//                    controller.addLines(parsedLines);
 
-                    //clear userTextBox
-                    userTextBox.setText("");
+                //clear userTextBox
+                userTextBox.setText("");
 
-                    //temp line to lines to all titles box
-                    String newText = formatLines(parsedLines);
-                    allTitlesBox.setText(newText);
-                }
+                setAllTitles(parsedLines);
             });
 
         deleteTitlesButton = new JButton();
@@ -102,14 +96,20 @@ public class MainView {
             deleteTitlesButton.setFont(fontText);
 
             //add action listen to submit text button to send controller the new lines, and also clear text box
-            submitTextButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    List<List<String>> deletedLines = new ArrayList<>();
+            deleteTitlesButton.addActionListener(e -> {
+                List<List<String>> deletedLines = new ArrayList<>();
+                List<String> selected = allTitlesBox.getSelectedValuesList();
+                if(selected.isEmpty()) return;
 
-                    //call controller to add new lines
-                    controller.deleteLines(deletedLines);
+                for(String line : selected){
+                    String[] delimitedLine = line.split("\\s+");
+                    deletedLines.add(Arrays.asList(delimitedLine));
                 }
+
+                System.out.println(deletedLines);
+
+                //call controller to add new lines
+                controller.deleteLines(deletedLines);
             });
 
             //add action listener to delete any selected lines, sent it to the controller to update the model,
@@ -260,7 +260,19 @@ public class MainView {
     }
 
     public void setAllTitles(List<List<String>> allTitles){
-        this.allTitlesBox.setText(formatLines(allTitles));
+        String[] strings = new String[allTitles.size()];
+        for(int i = 0; i<allTitles.size(); i++){
+            List<String> line = allTitles.get(i);
+            StringBuilder lineString = new StringBuilder();
+            for(int j = 0; j<line.size(); j++){
+                lineString.append(line.get(j));
+                if(j!=line.size()-1){
+                    lineString.append(" ");
+                }
+            }
+            strings[i] = lineString.toString();
+        }
+        allTitlesBox.setListData(strings);
     }
 
 }
