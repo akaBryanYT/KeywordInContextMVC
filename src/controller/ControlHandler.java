@@ -24,6 +24,7 @@ public class ControlHandler {
 
     //Adds the line and its circularly shifted variants to the proper spot in the model
     public void addLines(List<List<String>> lines) {
+        //TODO: Finish addLines method.
 
         //First get the shifted lines based off of this line
         List<List<String>> shiftedLines = circ.circShift(lines);
@@ -48,7 +49,7 @@ public class ControlHandler {
 
 
     public void deleteLines(List<List<String>> lines) {
-
+        //TODO: Finish deleteLines method.
     	//hashmap from line string to index
     }
 
