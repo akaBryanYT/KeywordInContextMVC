@@ -37,7 +37,7 @@ public class Alphabetizer {
     		
     		//Ensure that if there was a larger index, it is increased
     		for(int k = 0; k < i; k++) {
-    			if(returnIndices[k] > j) {
+    			if(returnIndices[k] >= j) {
     				returnIndices[k]++;
     			}
     		}

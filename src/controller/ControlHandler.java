@@ -57,6 +57,9 @@ public class ControlHandler {
         //Get the indexes that each line should be added as
         int[] indexes = alpha.getIndices(allLines, shiftedLines);
         
+        System.out.println(shiftedLines);
+        System.out.println(Arrays.toString(indexes));
+        
         //Make sure that they are added with the smallest index going first
         for(int i = 0; i < shiftedLines.size(); i++) {
         	int tempMin = indexes[i];
@@ -75,6 +78,9 @@ public class ControlHandler {
         	Collections.swap(lineIDs,  i, minIndex);
         	
         }
+        
+        System.out.println(shiftedLines);
+        System.out.println(Arrays.toString(indexes));
         
         
         //Add each line into the model
