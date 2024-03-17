@@ -26,6 +26,7 @@ public class MainView {
     private JButton deleteTitlesButton;
     private JFrame mainFrame;
     private final ControlHandler controller;
+    private List<String> titleList;
 
     public MainView(ControlHandler controller){
         this.mainFrame = new JFrame();
@@ -87,12 +88,12 @@ public class MainView {
                 parsedLines = removeDuplicateLines(parsedLines);
 
                 //call controller to add new lines
-//                    controller.addLines(parsedLines);
+                controller.addLines(parsedLines);
 
                 //clear userTextBox
                 userTextBox.setText("");
-
-                setAllTitles(parsedLines);
+                
+                
             });
 
         deleteTitlesButton = new JButton();
@@ -278,6 +279,23 @@ public class MainView {
             strings[i] = lineString.toString();
         }
         allTitlesBox.setListData(strings);
+    }
+    
+ // add all titles to titles box.
+    public void setAllKWIC(List<List<String>> allTitles){
+        String[] strings = new String[allTitles.size()];
+        for(int i = 0; i<allTitles.size(); i++){
+            List<String> line = allTitles.get(i);
+            StringBuilder lineString = new StringBuilder();
+            for(int j = 0; j<line.size(); j++){
+                lineString.append(line.get(j));
+                if(j!=line.size()-1){
+                    lineString.append(" ");
+                }
+            }
+            strings[i] = lineString.toString();
+        }
+        kwicTextBox.setText(String.join("\n", strings));;
     }
 
 }

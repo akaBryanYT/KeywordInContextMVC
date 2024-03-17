@@ -13,6 +13,8 @@ public class LineStorage {
     //Stores the lines
     private final List<List<String>> storedLines;
     
+    private final List<List<String>> userLines;
+    
     //Maps the lines to IDs
     private final HashMap<List<String>, Integer> hMap;
 
@@ -20,6 +22,19 @@ public class LineStorage {
     public LineStorage() {
         storedLines = new ArrayList<List<String>>();
         hMap = new HashMap<List<String>, Integer>();
+        userLines = new ArrayList<List<String>>();
+    }
+    
+    public void addTitle(List<String> line) {
+    	userLines.add(line);
+    }
+    
+    public void deleteTitle(List<String> line) {
+    	userLines.remove(line);
+    }
+    
+    public List<List<String>> getAllTitles() {
+    	return userLines;
     }
 
     //Returns a copy of the stored lines
@@ -45,10 +60,11 @@ public class LineStorage {
     //Delete a set of lines with the same ID as the line entered
     public void deleteLine(List<String> line) {
     	int lineID = hMap.get(line);
-    	for (List<String> i : hMap.keySet()) {
-    		  if(hMap.get(i) == lineID) {
-    			  storedLines.remove(i);
-    			  hMap.remove(i);
+    	Object[] keys = hMap.keySet().toArray();
+    	for (int i = keys.length -1; i >= 0; i--) {
+    		  if(hMap.get(keys[i]) == lineID) {
+    			  storedLines.remove(keys[i]);
+    			  hMap.remove(keys[i]);
     		  }
     		}
     	

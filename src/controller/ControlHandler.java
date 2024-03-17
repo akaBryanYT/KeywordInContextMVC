@@ -4,6 +4,8 @@ import java.util.List;
 import model.LineStorage;
 import view.MainView;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 import javax.swing.*;
 
@@ -24,6 +26,19 @@ public class ControlHandler {
     public void addLines(List<List<String>> lines) {
         //TODO: Finish addLines method.
     	
+    	//remove duplicates
+    	List<List<String>> testLines = storage.getAll();
+    	for(int i = lines.size() - 1; i >= 0; i--) {
+    		if(testLines.contains(lines.get(i))) {
+    			lines.remove(i);
+    		}
+    	}
+    	
+    	//add titles
+    	for(List<String> line:lines) {
+    		storage.addTitle(line);
+    	}
+    	
     	//Get the Ids for the lines
     	List<Integer> lineIDs = new ArrayList<Integer>();
     	for(int i = 0; i < lines.size(); i++) {
@@ -42,8 +57,26 @@ public class ControlHandler {
         //Get the indexes that each line should be added as
         int[] indexes = alpha.getIndices(allLines, shiftedLines);
         
-        //TODO: Make sure that they are added with the smallest index going first
-
+        //Make sure that they are added with the smallest index going first
+        for(int i = 0; i < shiftedLines.size(); i++) {
+        	int tempMin = indexes[i];
+        	int minIndex = i;
+        	for(int j = i; j < shiftedLines.size(); j++) {
+        		if(indexes[j] < tempMin) {
+        			tempMin = indexes[j];
+        			minIndex = j;
+        		}
+        	}
+        	
+        	//swap the values
+        	indexes[minIndex] = indexes[i];
+        	indexes[i] = tempMin;
+        	Collections.swap(shiftedLines, i, minIndex);
+        	Collections.swap(lineIDs,  i, minIndex);
+        	
+        }
+        
+        
         //Add each line into the model
         for(int i = 0; i < indexes.length; i++) {
             storage.addLine(shiftedLines.get(i), indexes[i], lineIDs.get(i));
@@ -53,15 +86,27 @@ public class ControlHandler {
         allLines = storage.getAll();
 
         //Send them to the view
-        mainView.setAllTitles(allLines);
+        mainView.setAllKWIC(allLines);
+        mainView.setAllTitles(storage.getAllTitles());
+        
     }
 
 
     public void deleteLines(List<List<String>> lines) {
+    	
+    	//delete title
+    	for(List<String> line:lines){
+    		storage.deleteTitle(line);
+    	}
+    	
         //TODO: Finish deleteLines method.
     	for(int i = 0; i < lines.size(); i++) {
     		storage.deleteLine(lines.get(i));
     	}
+    	
+    	//Send them to the view
+        mainView.setAllKWIC(storage.getAll());
+        mainView.setAllTitles(storage.getAllTitles());
     	
     }
     
